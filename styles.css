@@ -20,6 +20,7 @@ button, input, select {
 }
 table {
   width: 100%; border-collapse: collapse;
+  max-width: 98vw;
 }
 th, td {
   border: 1px solid #ccc; padding: 0.5rem;
