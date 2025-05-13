@@ -31,7 +31,8 @@
     <table id="inventory-table">
       <thead>
         <tr>
-          <th>Code</th><th>UPC</th><th>Name</th><th>Brand</th><th>Type</th>
+          <th>Code</th><th>UPC</th><th>Name</th><th>Brand</th><th>Capacity</th>
+            <th>Type</th>
           <th>Stock Level</th><th>Cases</th><th>Actions</th>
         </tr>
       </thead>
@@ -47,6 +48,8 @@
         <input name="upc" placeholder="UPC / Code" required>
         <input name="name" placeholder="Item Name" required>
         <input name="brand" placeholder="Brand" required>
+        <input name="capacity" placeholder="oz, ct, etc." required>
+
         <select name="type" required>
             <option value="" disabled selected>Select Type</option>
             <option value="disposables">Disposables</option>

@@ -63,6 +63,7 @@ async function loadInventory() {
       <td>${it.upc}</td>
       <td>${it.name}</td>
       <td>${it.brand}</td>
+      <td>${it.capacity || ''}</td>
       <td>${it.type}</td>
       <td>${totalCases}</td>
       <td><button class="view-cases">📋</button></td>
@@ -99,13 +100,14 @@ function showItemModal(item = {}, isEdit = false) {
   currentItemId = isEdit ? item.id : null;
   itemTitle.textContent = isEdit ? 'Edit Item' : 'Add Item';
 
-  itemForm.reset(); // Clears all fields
+  itemForm.reset();
 
   if (isEdit) {
     itemForm.upc.value = item.upc;
     itemForm.name.value = item.name;
     itemForm.brand.value = item.brand;
     itemForm.type.value = item.type;
+    itemForm.capacity.value = item.capacity || '';
     itemForm.items_per_case.value = item.items_per_case || 1;
     itemForm.cases_per_box.value = item.cases_per_box || 1;
     itemForm.high_stock_threshold.value = item.high_stock_threshold ?? '';
@@ -116,6 +118,7 @@ function showItemModal(item = {}, isEdit = false) {
 
   open(itemModal);
 }
+
 
 async function populateCaseFormDropdown(selectedId = null) {
   const items = await api('/items');
@@ -131,19 +134,25 @@ async function populateCaseFormDropdown(selectedId = null) {
 }
 
 
-itemForm.addEventListener('submit', async e=>{
+itemForm.addEventListener('submit', async e => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(itemForm));
   data.threshold_enabled = itemForm.threshold_enabled.checked;
-  const method = currentItemId?'PATCH':'POST';
-  const url    = currentItemId?`/items/${currentItemId}`:'/items';
-  await fetch(API+url,{
-    method, headers:{'Content-Type':'application/json'},
+  data.capacity = data.capacity?.trim() || ''; // add this line
+
+  const method = currentItemId ? 'PATCH' : 'POST';
+  const url = currentItemId ? `/items/${currentItemId}` : '/items';
+
+  await fetch(API + url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   });
+
   close(itemModal);
   loadInventory();
 });
+
 
 caseForm.addEventListener('submit', async e=>{
   e.preventDefault();
