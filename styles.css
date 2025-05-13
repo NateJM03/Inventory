@@ -1,75 +1,51 @@
-/* styles.css — layout, table, modals, and stock-level colors */
-
 body {
-  font-family: sans-serif;
   margin: 0; padding: 0;
+  font-family: sans-serif;
+  background: #f2f2f2;
 }
-
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #222; color: white;
+  background: #333; color: #fff;
+  display: flex; justify-content: space-between; align-items: center;
   padding: 0.5rem 1rem;
 }
-
 main {
-  padding: 1rem;
+  padding: 1rem; max-width: 800px; margin: auto;
 }
-
 .controls {
-  display: flex;
-  gap: 1rem;
+  display: flex; gap: 1rem; flex-wrap: wrap;
   margin-bottom: 1rem;
-  flex-wrap: wrap;
 }
-
-button { cursor: pointer; }
-
+button, input, select {
+  font-size: 1rem;
+}
 table {
-  width: 100%;
-  border-collapse: collapse;
+  width: 100%; border-collapse: collapse;
 }
-
 th, td {
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-  text-align: left;
+  border: 1px solid #ccc; padding: 0.5rem;
 }
+tr.stock-high { background: #e0ffe0; }
+tr.stock-regular { background: #ffffe0; }
+tr.stock-low { background: #ffe0e0; }
 
-/* Stock-level coloring: rely on JS to add .stock-high/.stock-regular/.stock-low */
-tr.stock-high    { background: #e0ffe0; } /* light green */
-tr.stock-regular { background: #ffffe0; } /* light yellow */
-tr.stock-low     { background: #ffe0e0; } /* light red */
-
-/* Modal base styles */
 .modal {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  position: fixed; top:0; left:0; right:0; bottom:0;
   background: rgba(0,0,0,0.5);
   display: flex; align-items: center; justify-content: center;
-  z-index: 100;
 }
-
 .modal.hidden { display: none; }
-
 .modal-content {
-  background: white; padding: 1rem 1.5rem;
-  border-radius: 8px; max-width: 90%; width: 400px;
+  background: #fff; padding: 1rem 1.5rem; border-radius: 6px;
+  width: 90%; max-width: 400px;
 }
-
-.modal-content h2 {
-  margin-top: 0;
-}
-
 .modal-content form {
-  display: flex; flex-direction: column; gap: 0.75rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
 }
-
 .modal-buttons {
-  display: flex; gap: 0.5rem; justify-content: flex-end;
-  margin-top: 1rem;
+  display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;
 }
 
-.modal-close {
-  background: #ccc; border: none; padding: 0.5rem 1rem;
+@media (max-width: 600px) {
+  th, td { font-size: 0.9rem; }
+  .controls { flex-direction: column; }
 }

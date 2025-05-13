@@ -2,37 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Inventory Tracker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Header with barcode scan trigger -->
   <header>
     <h1>Inventory Tracker</h1>
     <button id="scan-barcode-btn">📷 Scan UPC</button>
   </header>
-
-  <!-- Main controls: filter and add-item button -->
   <main>
     <section class="controls">
+      <button id="add-item-btn">➕ Add Item</button>
       <label>
         Filter by Type:
         <select id="filter-type">
           <option value="">All</option>
-          <option value="beverages">Beverages</option>
-          <option value="disposables">Disposables</option>
-          <!-- add more types as needed -->
         </select>
       </label>
-      <button id="add-item-btn">➕ Add Item</button>
     </section>
 
-    <!-- Inventory table -->
     <table id="inventory-table">
       <thead>
         <tr>
-          <th>UPC</th><th>Name</th><th>Brand</th><th>Type</th>
+          <th>Code</th><th>UPC</th><th>Name</th><th>Brand</th><th>Type</th>
           <th>Stock Level</th><th>Cases</th><th>Actions</th>
         </tr>
       </thead>
@@ -40,39 +33,26 @@
     </table>
   </main>
 
-  <!-- 4 Modals (hidden by default) -->
-  <!-- 1) Add/Edit Item -->
+  <!-- Modals -->
   <div id="item-modal" class="modal hidden">
     <div class="modal-content">
       <h2 id="item-modal-title">Add Item</h2>
       <form id="item-form">
-        <!-- UPC -->
-        <label>UPC: <input name="upc" type="text" required></label>
-        <!-- Name -->
-        <label>Name: <input name="name" type="text" required></label>
-        <!-- Brand -->
-        <label>Brand: <input name="brand" type="text" required></label>
-        <!-- Type -->
-        <label>Type:
-          <select name="type" required>
-            <option value="beverages">Beverages</option>
+        <input name="upc" placeholder="UPC / Code" required>
+        <input name="name" placeholder="Item Name" required>
+        <input name="brand" placeholder="Brand" required>
+        <select name="type" required>
+            <option value="" disabled selected>Select Type</option>
             <option value="disposables">Disposables</option>
-            <!-- add more -->
-          </select>
-        </label>
-        <!-- Thresholds -->
-        <label>High stock ≥
-          <input name="high_stock_threshold" type="number" min="0" required>
-          cases
-        </label>
-        <label>Regular stock ≥
-          <input name="regular_stock_threshold" type="number" min="0" required>
-          cases
-        </label>
-        <label>Low stock ≤
-          <input name="low_stock_threshold" type="number" min="0" required>
-          cases
-        </label>
+            <option value="beverages">Beverages</option>
+            <option value="other">Other</option>
+        </select>
+        <input name="items_per_case" type="number" placeholder="Units per Case (optional)" min="1">
+        <input name="cases_per_box"  type="number" placeholder="Cases per Box (optional)" min="1">
+        <input name="high_stock_threshold" type="number" placeholder="Max Cases">
+        <input name="regular_stock_threshold" type="number" placeholder="Regular Cases">
+        <input name="low_stock_threshold" type="number" placeholder="Min Cases">
+        <label><input type="checkbox" name="threshold_enabled" checked> Enable Thresholds</label>
         <div class="modal-buttons">
           <button type="submit">Save</button>
           <button type="button" class="modal-close">Cancel</button>
@@ -81,36 +61,12 @@
     </div>
   </div>
 
-  <!-- 2) Add Packaging Version -->
-  <div id="packaging-modal" class="modal hidden">
-    <div class="modal-content">
-      <h2>Add Packaging</h2>
-      <form id="packaging-form">
-        <label>Units per Case:
-          <input name="items_per_case" type="number" min="1" required>
-        </label>
-        <label>Cases per Box:
-          <input name="cases_per_box" type="number" min="1" value="1" required>
-        </label>
-        <label>Effective Date:
-          <input name="effective_date" type="date" required>
-        </label>
-        <div class="modal-buttons">
-          <button type="submit">Add Version</button>
-          <button type="button" class="modal-close">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- 3) Add Case -->
   <div id="case-modal" class="modal hidden">
     <div class="modal-content">
-      <h2>Add Case</h2>
+      <h2>Add Cases</h2>
       <form id="case-form">
-        <label>Purchase Date:
-          <input name="purchase_date" type="date" required>
-        </label>
+        <select name="item_id" required></select>
+        <input name="quantity" type="number" value="1" min="1" required>
         <div class="modal-buttons">
           <button type="submit">Add</button>
           <button type="button" class="modal-close">Cancel</button>
@@ -119,7 +75,6 @@
     </div>
   </div>
 
-  <!-- 4) View / Remove Cases -->
   <div id="cases-list-modal" class="modal hidden">
     <div class="modal-content">
       <h2>Case History</h2>
@@ -128,8 +83,7 @@
     </div>
   </div>
 
-  <!-- App logic + optional QuaggaJS fallback -->
+  <script src="/quagga/quagga.min.js"></script>
   <script src="app.js"></script>
-  <script src="quagga.min.js"></script>
 </body>
 </html>
