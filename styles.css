@@ -46,6 +46,6 @@ tr.stock-low { background: #ffe0e0; }
 }
 
 @media (max-width: 600px) {
-  th, td { font-size: 0.9rem; }
+  th, td { font-size: 0.5rem; }
   .controls { flex-direction: column; }
 }
